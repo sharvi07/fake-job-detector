@@ -1,0 +1,6 @@
+data/
+models/
+*.csv
+*.pkl
+*.xlsx
+.ipynb_checkpoints/
