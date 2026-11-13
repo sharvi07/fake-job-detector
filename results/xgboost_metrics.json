@@ -1,0 +1,103 @@
+{
+  "model": "XGBoost on TF-IDF + rule features",
+  "best_params": {
+    "subsample": 0.85,
+    "spw_mode": "full",
+    "reg_lambda": 1,
+    "min_child_weight": 1,
+    "max_depth": 8,
+    "learning_rate": 0.05,
+    "gamma": 0.5,
+    "colsample_bytree": 0.5
+  },
+  "best_iteration": 478,
+  "val": {
+    "n": 2640,
+    "n_fraud": 129,
+    "threshold": 0.4624,
+    "precision": 0.9292,
+    "recall": 0.814,
+    "f1": 0.8678,
+    "pr_auc": 0.9273,
+    "roc_auc": 0.9935,
+    "tn": 2503,
+    "fp": 8,
+    "fn": 24,
+    "tp": 105
+  },
+  "test": {
+    "n": 2640,
+    "n_fraud": 128,
+    "threshold": 0.4624,
+    "precision": 0.8649,
+    "recall": 0.75,
+    "f1": 0.8033,
+    "pr_auc": 0.8892,
+    "roc_auc": 0.988,
+    "tn": 2497,
+    "fp": 15,
+    "fn": 32,
+    "tp": 96
+  },
+  "test_at_0.5": {
+    "n": 2640,
+    "n_fraud": 128,
+    "threshold": 0.5,
+    "precision": 0.8807,
+    "recall": 0.75,
+    "f1": 0.8101,
+    "pr_auc": 0.8892,
+    "roc_auc": 0.988,
+    "tn": 2499,
+    "fp": 13,
+    "fn": 32,
+    "tp": 96
+  },
+  "test_unseen_text": {
+    "n": 2371,
+    "n_fraud": 100,
+    "threshold": 0.4624,
+    "precision": 0.8193,
+    "recall": 0.68,
+    "f1": 0.7432,
+    "pr_auc": 0.8332,
+    "roc_auc": 0.9834,
+    "tn": 2256,
+    "fp": 15,
+    "fn": 32,
+    "tp": 68
+  },
+  "n_test_rows_with_text_seen_in_train_or_val": 269,
+  "n_features": 3033,
+  "runtime_sec": 1459.4,
+  "ablation_test": {
+    "rule_features_only": {
+      "n": 2640,
+      "n_fraud": 128,
+      "threshold": 0.5276,
+      "precision": 0.7523,
+      "recall": 0.6406,
+      "f1": 0.692,
+      "pr_auc": 0.7487,
+      "roc_auc": 0.9469,
+      "tn": 2485,
+      "fp": 27,
+      "fn": 46,
+      "tp": 82
+    },
+    "tfidf_only": {
+      "n": 2640,
+      "n_fraud": 128,
+      "threshold": 0.5711,
+      "precision": 0.87,
+      "recall": 0.6797,
+      "f1": 0.7632,
+      "pr_auc": 0.8505,
+      "roc_auc": 0.9826,
+      "tn": 2499,
+      "fp": 13,
+      "fn": 41,
+      "tp": 87
+    }
+  }
+}
