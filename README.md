@@ -64,3 +64,32 @@ result = predict(posting_text)   # {"label": "fraud"|"real", "prob": 0.87, "reas
 - For pasted text the structured fields (profile, logo, salary) are unknown, which weakens the prediction.
 - `prob` is not calibrated (fraud is up-weighted during training); treat it as a score, not a true probability.
 - Identical posting text appears in more than one split, which inflates scores; see `test_unseen_text`.
+
+- ## App + Integration (Person 4)
+
+**Code**
+- `app/app.py`: Streamlit app. Accepts pasted text or an uploaded PDF/DOCX, shows the fraud probability, a verdict, and the rule-based signals. Optional BERT + LIME explanation (sidebar checkbox).
+- `src/extract.py`: reads text from PDF (pdfplumber) and DOCX (python-docx).
+- `test_cases/`: test postings (`.txt` and `full_postings/*.docx/pdf`) and ``results.md`.
+- `docs/screenshots/`: app screenshots used in the report.
+
+**Model files** (Google Drive, not in GitHub). Put them in `models/`:
+- `xgboot_model.json`, `tfidf_vectorizer.pkl`, `meta.json` (XGBoost, TF-IDF vectorizer, feature order and threshold)
+
+
+**Run** 
+
+```
+pip install -r requirements.txt
+streamlit run app/app.py
+```
+
+**How the app decides.** The model input is the 33 rule features followed by the TF-IDF terms, in the order listed in `meta.json`; the app checks this at startup. A posting is flagged as fraudulent when the XGBoost probability reaches the saved threshold (0.462), or when 4 or more rule signals fire (hybrid verdict). The model score is always shown next to the verdict.
+
+**App test results** (9 postings, see `test_cases/results.md`): 8 of 9 correct, 1 false negative, 0 false positives. This is a demonstration on a small sample, not a performance estimate.
+
+**Known limitations**
+- A polished scam with little aggressive wording can get a very low model score (3% to 6% in our tests). The hybrid rule catches it only when enough signals fire.
+- Rule signals are keyword-based and do not understand negation, for example "we never ask for bank details" still triggers the personal-information signal.
+- Pasted or uploaded text has no structured fields (company profile, logo), which weakens the model.
+- LIME on BERT is slow on a CPU.
